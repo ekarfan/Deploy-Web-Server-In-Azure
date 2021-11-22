@@ -1,8 +1,4 @@
-# Deploy-Web-Server-In-Azure
-
-# Azure Infrastructure Operations Project: Deploying a scalable IaaS web server in Azure
  
-# 
 ### Introduction
 This project is to creating infrastructure as code in the form of a Terraform template to deploy a website with a load balancer.
 
@@ -68,9 +64,7 @@ Assign policy by :
 3. Deploy Azure resources with Terraform
 	
 	terraform init
-  
 	terraform plan -out solution.plan
-  
 	terraform apply "solution.plan"
 
 
