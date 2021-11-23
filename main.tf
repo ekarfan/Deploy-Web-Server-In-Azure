@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "=2.86.0"
-    }
-  }
-}
-
 provider "azurerm" {
   features {}
 }
@@ -53,7 +44,8 @@ resource "azurerm_public_ip" "main" {
 
 
 resource "azurerm_network_interface" "main" {
-  name                = "${var.prefix}-jumpbox-nic"
+  count = 2
+  name                = "${var.prefix}-umpbox-nic-${var.server_name[count.index]}"
   resource_group_name = azurerm_resource_group.main.name
   location            = var.location
 
@@ -133,15 +125,16 @@ resource "azurerm_lb_backend_address_pool" "main" {
 
 
 resource "azurerm_network_interface_backend_address_pool_association" "main" {
+  count = var.vm_count
   backend_address_pool_id = azurerm_lb_backend_address_pool.main.id
   ip_configuration_name   = "${var.prefix}-ip_configuration"
-  network_interface_id    = "${azurerm_network_interface.main.id}"
+  network_interface_id    = azurerm_network_interface.main[count.index].id
 }
 
 
- 
 resource "azurerm_linux_virtual_machine" "main" {
-  name                            = "${var.prefix}-vm"
+  count = var.vm_count
+  name                            = "${var.prefix}-vm-${var.server_name[count.index]}"
   resource_group_name             = azurerm_resource_group.main.name
   location                        = var.location
   size                            = "Standard_B1s"
@@ -149,7 +142,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   admin_password                  = var.password
   availability_set_id             = azurerm_availability_set.main.id
   disable_password_authentication = false
-  network_interface_ids = [azurerm_network_interface.main.id,]
+  network_interface_ids = [azurerm_network_interface.main[count.index].id]
 
   source_image_reference {
     publisher = "Canonical"
@@ -170,7 +163,7 @@ resource "azurerm_linux_virtual_machine" "main" {
 
 
 resource "azurerm_managed_disk" "main" {
-  count                = 2
+  count                = var.vm_count
   name                 = "${var.prefix}-disk-${count.index}"
   location             = var.location
   create_option        = "Empty"

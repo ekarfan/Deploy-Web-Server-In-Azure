@@ -19,14 +19,24 @@ variable "tags" {
 
 variable "username" {
   description = "Enter username to associate with the machine"
-  default     = "user"
+  default     = "jiannshyng.heh@gmail.com"
 
 }
 
 variable "password" {
   description = "Enter password to use to access the machine"
-  default     = "pwd"
+  default     = "Fan650278"
 
 }
 
+variable "vm_count" {
+  description = "Counts of machines to be created"
+  type = number
+  default = 2
+}
+
+variable "server_name"{
+  type = list
+  default = ["uat","stage"]
+}
 

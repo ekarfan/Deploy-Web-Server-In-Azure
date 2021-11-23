@@ -47,8 +47,8 @@ Assign policy by :
 
     	export ARM_SUBSCRIPTION_ID="90447603-4de8-44b6-8de6-9f5aff4ae738"
 		export ARM_CLIENT_ID="eb01e622-3d71-4fd4-bc06-75ff5e5dd8f0"
-		export ARM_CLIENT_SECRET="xtQ5qoc.mApnYp7u2TnQ3vDQorpGay.zq1"
-		export ARM_TENANT_ID="94b6094f-f2a4-4928-8070-5893ca9078cd"
+export ARM_CLIENT_SECRET="xtQ5qoc.mApnYp7u2TnQ3vDQorpGay.zq1"
+export ARM_TENANT_ID="94b6094f-f2a4-4928-8070-5893ca9078cd"
 
 
 
@@ -66,6 +66,9 @@ Assign policy by :
 	terraform init
 	terraform plan -out solution.plan
 	terraform apply "solution.plan"
+
+
+
 
 
 4. Destroy the resources
